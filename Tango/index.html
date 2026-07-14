@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tango Game</title>
+    <style>
+        body { 
+            text-align: center; 
+            font-family: Arial, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0; 
+        }
+        .grid { 
+            display: grid; 
+            gap: 5px; 
+            margin: 20px auto; 
+            grid-template-columns: repeat(4, 1fr); 
+            grid-template-rows: repeat(4, 1fr); 
+            width: 240px; 
+            height: 240px; 
+        }
+        .cell { 
+            width: 100%; 
+            height: 100%; 
+            font-size: 24px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            border: 1px solid black; 
+            cursor: pointer; 
+        }
+        .cell:hover {
+            width: 98%; 
+            height: 98%; 
+            border: 3px solid #ae2e2d; 
+        }
+        .controls { 
+            margin: 10px; 
+        }
+        .rules { 
+            border: 2px solid black; 
+            padding: 10px; 
+            width: 300px; 
+            text-align: left; 
+        }
+        .error { 
+            color: red; 
+            font-weight: bold; 
+        }
+        #game-container { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        }
+        #csol{
+            background-color: #ae2e2d;
+            width: 130px;
+            height: 25px;
+            color: white;
+            cursor: pointer;
+            font-size: small;
+        }
+        #csol:hover{
+            background-color: white;
+            border: 2.5px solid #ae2e2d;
+            color: black;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Tango Game</h1>
+    <div class="rules">
+        <h3>Rules:</h3>
+        <ul>
+            <li>Each row and column must contain an equal number of Suns ☀️ and Moons 🌙.</li>
+            <li>No more than two identical symbols can be adjacent.</li>
+        </ul>
+    </div>
+    <div id="game-container"></div>
+    <button id="csol" onclick="checkSolution()">Check Solution</button>
+    <p id="result"></p>
+    
+    <script>
+        const size = 4;
+        const symbols = ['☀️', '🌙', ''];
+        let board = Array.from({ length: size }, () => Array(size).fill(''));
+
+        function generateValidHints() {
+            let tempBoard = Array.from({ length: size }, () => Array(size).fill(''));
+            let hintCount = Math.floor((size * size) / 4); 
+            let placedHints = 0;
+            
+            while (placedHints < hintCount) {
+                let r = Math.floor(Math.random() * size);
+                let c = Math.floor(Math.random() * size);
+                if (tempBoard[r][c] === '') {
+                    let symbol = Math.random() > 0.5 ? '☀️' : '🌙';
+                    tempBoard[r][c] = symbol;
+                    placedHints++;
+                }
+            }
+            board = tempBoard;
+        }
+
+        function createGrid() {
+            generateValidHints();
+            const container = document.getElementById('game-container');
+            container.innerHTML = '';
+            const grid = document.createElement('div');
+            grid.classList.add('grid');
+            
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    const cell = document.createElement('div');
+                    cell.classList.add('cell');
+                    cell.dataset.row = i;
+                    cell.dataset.col = j;
+                    cell.textContent = board[i][j];
+                    
+                    if (board[i][j] === '') {
+                        cell.addEventListener('click', toggleSymbol);
+                    } else {
+                        cell.style.backgroundColor = '#ddd';
+                    }
+                    grid.appendChild(cell);
+                }
+            }
+            container.appendChild(grid);
+        }
+
+        function toggleSymbol(event) {
+            let cell = event.target;
+            let row = cell.dataset.row;
+            let col = cell.dataset.col;
+            let currentIndex = symbols.indexOf(board[row][col]);
+            let nextIndex = (currentIndex + 1) % symbols.length;
+            board[row][col] = symbols[nextIndex];
+            cell.textContent = board[row][col];
+        }
+
+        function checkSolution() {
+            let valid = true;
+            let errorMessage = "";
+            
+            for (let i = 0; i < size; i++) {
+                let rowSymbols = board[i];
+                let colSymbols = board.map(row => row[i]);
+                
+                if (rowSymbols.filter(s => s === '☀️').length !== size / 2 || rowSymbols.filter(s => s === '🌙').length !== size / 2) {
+                    valid = false;
+                    errorMessage = "Each row must have an equal number of Suns ☀️ and Moons 🌙.";
+                    break;
+                }
+                if (colSymbols.filter(s => s === '☀️').length !== size / 2 || colSymbols.filter(s => s === '🌙').length !== size / 2) {
+                    valid = false;
+                    errorMessage = "Each column must have an equal number of Suns ☀️ and Moons 🌙.";
+                    break;
+                }
+                
+                for (let j = 0; j < size - 2; j++) {
+                    if (board[i][j] === board[i][j + 1] && board[i][j] === board[i][j + 2]) {
+                        valid = false;
+                        errorMessage = "No more than two identical symbols can be adjacent in a row.";
+                        break;
+                    }
+                    if (board[j][i] === board[j + 1][i] && board[j][i] === board[j + 2][i]) {
+                        valid = false;
+                        errorMessage = "No more than two identical symbols can be adjacent in a column.";
+                        break;
+                    }
+                }
+                if (!valid) break;
+            }
+            
+            document.getElementById('result').textContent = valid ? "Correct solution! ✅" : errorMessage;
+            document.getElementById('result').classList.toggle('error', !valid);
+        }
+
+        createGrid();
+    </script>
+</body>
+</html>

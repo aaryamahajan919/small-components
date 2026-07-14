@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://s.brightspace.com/lib/fonts/0.6.1/fonts.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #f4f4f9;
+            font-family: Lato, sans-serif;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background: white;
+            justify-self: center;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0px 0px 5px 5px rgba(0.1, 0.1, 0.1, 0.1);
+            width: 100%;
+            max-width: 25%;
+            text-align: center;
+        }
+
+        audio {
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin: 15px 0;
+            cursor: pointer;
+        }
+
+        .progress {
+            width: 0;
+            height: 100%;
+            background: #AE2E2D;
+            border-radius: 5px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .controls button {
+            padding: 10px;
+            background-color: #AE2E2D;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 20px;
+        }
+
+        .volume-control {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.volume-control img {
+    width: 25px;
+    height: 25px;
+}
+
+.volume-bars {
+    display: flex;
+    gap: 4px;
+}
+
+.volume-bars .bar {
+    width: 6px;
+    height: 20px;
+    background: #e0e0e0;
+    border-radius: 2px;
+    transition: background 0.3s;
+}
+
+
+        .controls button:hover {
+            background-color: #881f1e;
+        }
+
+        .speed-control {
+            margin: 15px 0;
+        }
+
+        @media (max-width: 80%) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .controls button {
+                width: 30px;
+                height: 30px;
+                font-size: 16px;
+            }
+            .volume-control img {
+                width: 20px;
+                height: 20px;
+            }
+
+            .volume-control input[type="range"] {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>File and Disk Encryption</h1>
+        <audio id="podcast">
+            <source src="/content/enforced/8758-OMBFT402_Jan23/Podcast/File%20and%20Disk%20Encryption_%20Unit%2012.wav?isCourseFile=true" type="audio/mpeg">
+        </audio>
+        <div class="progress-bar" onclick="seek(event)">
+            <div class="progress" id="progress"></div>
+        </div>
+        <div class="controls">
+            <button onclick="playPodcast()" aria-label="Play">▶</button>
+            <button onclick="pausePodcast()" aria-label="Pause">⏸</button>
+            <button onclick="stopPodcast()" aria-label="Stop">⏹</button>
+            <button onclick="downloadPodcast()" aria-label="Download" style="font-size: 25px;">⤓</button>
+        </div>
+        <div class="speed-control">
+            <label>Speed: </label>
+            <select onchange="changeSpeed(event)">
+                <option value="1">1x</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+            </select>
+        </div>
+        <div class="volume-control">
+            <img src="volume-up-interface-symbol.png" alt="Volume">
+            <div class="volume-bars">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+        <div id="currentTime">0:00 / 0:00</div>
+    </div>
+
+    <script>
+        const podcast = document.getElementById('podcast');
+        const currentTimeDisplay = document.getElementById('currentTime');
+        const progress = document.getElementById('progress');
+
+        podcast.addEventListener('loadedmetadata', () => {
+            updateCurrentTime();
+        });
+
+        podcast.addEventListener('timeupdate', () => {
+            updateCurrentTime();
+            const percentage = (podcast.currentTime / podcast.duration) * 100;
+            progress.style.width = percentage + '%';
+        });
+
+        function playPodcast() {
+            podcast.play();
+        }
+
+        function pausePodcast() {
+            podcast.pause();
+        }
+
+        function stopPodcast() {
+            podcast.pause();
+            podcast.currentTime = 0;
+        }
+
+        function changeSpeed(event) {
+            podcast.playbackRate = event.target.value;
+        }
+
+        function changeVolume(event) {
+                podcast.volume = event.target.value;
+            }
+
+        function seek(event) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const width = rect.width;
+            const duration = podcast.duration;
+            podcast.currentTime = (clickX / width) * duration;
+        }
+
+        function updateCurrentTime() {
+            const minutes = Math.floor(podcast.currentTime / 60);
+            const seconds = Math.floor(podcast.currentTime % 60);
+            const totalMinutes = Math.floor(podcast.duration / 60);
+            const totalSeconds = Math.floor(podcast.duration % 60);
+            currentTimeDisplay.innerText = `${minutes}:${seconds < 10 ? '0' + seconds : seconds} / ${totalMinutes}:${totalSeconds < 10 ? '0' + totalSeconds : totalSeconds}`;
+        }
+
+        function downloadPodcast() {
+            const link = document.createElement('a');
+            link.href = podcast.querySelector('source').src;
+            link.download = 'podcast.mp3';
+            link.click();
+        }
+
+        const volumeBars = document.querySelectorAll('.volume-bars .bar');
+
+function updateVolumeBars(volume) {
+    volumeBars.forEach((bar, index) => {
+        if ((index + 1) / volumeBars.length <= volume) {
+            bar.style.background = '#ae2e2d';
+        } else {
+            bar.style.background = '#e0e0e0';
+        }
+    });
+}
+
+podcast.addEventListener('volumechange', () => {
+    updateVolumeBars(podcast.volume);
+});
+
+// Initialize volume bars
+updateVolumeBars(podcast.volume);
+
+    </script>
+</body>
+</html>

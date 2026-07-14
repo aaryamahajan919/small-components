@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Player</title>
+    <style>
+        body, h1, h2 {
+            margin: 0; padding: 0; font-family: Arial, sans-serif; text-align: center;
+        }
+        body {
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh;
+            flex-direction: column; /* Ensures proper alignment */
+}
+        .container {
+            align-items: center;
+            background-color: #f5f1e6;
+            display: flex; flex-direction: column;
+            width: 90%; max-width: 1000px;
+            border-radius: 25px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid #fac23d;
+            overflow: hidden;
+            padding: 20px;
+        }
+        .dropdown-container {
+            position: relative;
+            width: 80%;
+            padding: 10px;
+            text-align: center;
+        }
+        .dropdown {
+            position: relative;
+            width: 100%;
+        }
+        input {
+            width: 100%; padding: 10px;
+            color: white; 
+            font-size: 16px; box-sizing: border-box;
+            background-color: #ae2e2d; border: 1px solid #ccc;
+            border-radius: 4px; text-align: center;
+            cursor: pointer;
+        }
+        .dropdown-arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 13px;
+            color: black;
+            transition: transform 0.7s ease;
+        }
+        .dropdown-list {
+            position: absolute; top: 100%; left: 0;
+            width: 100%; border: 1px solid #fac23d;
+            background-color: white; max-height: 200px;
+            overflow-y: auto; z-index: 1;
+            display: none; border-radius: 4px;
+        }
+        .dropdown-list div {
+            padding: 10px; font-size: 14px;
+            cursor: pointer; border-bottom: 1px solid #fac23d;
+        }
+        .dropdown-list div:hover {
+            background-color: #f0f0f0;
+        }
+        .video-container {
+            position: relative;
+            width: 80%;
+            max-width: 700px;
+            aspect-ratio: 16 / 9;
+            border-radius: 10px;
+            border: 2px solid #ae2e2d;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        video {
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            object-fit: cover;
+            display: block;
+        }
+        .placeholder {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(0, 0, 0, 0.5);
+            font-size: 20px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+        #videoTitle {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Online Doubt Clearing Session</h2>
+        <div class="dropdown-container" id="dropdown-container">
+            <div class="dropdown">
+                <input type="text" id="session-input" placeholder="Select your session" readonly="readonly" onclick="toggleDropdown()">
+                <span class="dropdown-arrow" id="dropdown-arrow">&#9660;</span>
+            </div>
+            <div class="dropdown-list" id="session-dropdown">
+                <div data-src="Unit 6 - Matplotlib.mp4" data-title="Unit 6 - Matplotlib">Unit 1_07 Oct 2024</div>
+                <div data-src="Unit 6 - Matplotlib.mp4" data-title="Unit 7 - Matplotlib">Unit 2_21 March 2024</div>
+                <div data-src="Unit 6 - Matplotlib.mp4" data-title="Unit 8 - Matplotlib">Unit 3_28 March 2024</div>
+                <div data-src="Unit 6 - Matplotlib.mp4" data-title="Unit 9 - Matplotlib">Unit 4_04 April 2024</div>
+                <div data-src="Unit 6 - Matplotlib.mp4" data-title="Unit 10 - Matplotlib">Unit 5_25 April 2024</div>
+                <div data-src="Unit 6 - Matplotlib.mp4" data-title="Unit 11 - Matplotlib">Unit 6_27 April 2024</div>
+            </div>
+        </div>
+        <h2 id="videoTitle">No video selected</h2>
+        <div class="video-container">
+            <video id="videoPlayer" controls></video>
+            <div class="placeholder" id="placeholder-text">The video will play here</div>
+        </div>
+    </div>
+    <script>
+        function playVideo(src, title) {
+            document.getElementById('videoPlayer').src = src;
+            document.getElementById('videoTitle').textContent = title;
+            document.getElementById('videoPlayer').style.opacity = '1';
+            document.getElementById('placeholder-text').style.display = 'none';
+        }
+        function toggleDropdown() {
+            const dropdown = document.getElementById('session-dropdown');
+            const arrow = document.getElementById('dropdown-arrow');
+            
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+                arrow.style.transform = 'translateY(-50%) rotate(0deg)';
+            } else {
+                dropdown.style.display = 'block';
+                arrow.style.transform = 'translateY(-50%) rotate(180deg)';
+            }
+        }
+        function selectOption(event) {
+            const option = event.target;
+            const videoSrc = option.getAttribute('data-src');
+            const videoTitle = option.getAttribute('data-title');
+            document.getElementById('session-input').value = option.textContent;
+            playVideo(videoSrc, videoTitle);
+            toggleDropdown();
+        }
+        document.querySelectorAll('.dropdown-list div').forEach(item => {
+            item.addEventListener('click', selectOption);
+        });
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('session-dropdown');
+            const dropdownContainer = document.getElementById('dropdown-container');
+            const arrow = document.getElementById('dropdown-arrow');
+            if (!dropdownContainer.contains(event.target)) {
+                dropdown.style.display = 'none';
+                arrow.style.transform = 'translateY(-50%) rotate(0deg)';
+            }
+        });
+    </script>
+</body>
+</html>

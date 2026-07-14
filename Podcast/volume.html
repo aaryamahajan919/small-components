@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://s.brightspace.com/lib/fonts/0.6.1/fonts.css">
+    <style>
+
+
+.container {
+    justify-self: center;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.podcast-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    width: 100%;
+    gap: 15px;
+}
+
+.podcast-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    background: url('https://via.placeholder.com/60') center/cover no-repeat;
+}
+
+.progress-bar {
+    flex-direction: row;
+    flex-grow: 1;
+    height: 8px;
+    background: #e0e0e0;
+    border-radius: 5px;
+    cursor: pointer;
+    position: relative;
+}
+
+.progress {
+    width: 0;
+    height: 100%;
+    background: #AE2E2D;
+    border-radius: 5px;
+    transition: width 0.3s ease;
+}
+
+.current-time {
+    font-size: 14px;
+    color: #555;
+    white-space: nowrap;
+}
+
+.controls {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+.controls button {
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    background-color: #AE2E2D;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 15px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+}
+
+.controls button:focus,
+.controls button:hover {
+    background-color: #8b2323;
+    outline: none;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-top: 0px;
+}
+
+.volume-icon {
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+}
+
+.volume-bar {
+    width: 120px;
+    height: 5px;
+    background-color: #d3d3d3;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: width 0.3s ease;
+}
+
+.volume-bar .fill {
+    height: 100%;
+    background-color: #AE2E2D;
+    width: 50%;
+    border-radius: 4px 0 0 4px;
+}
+
+.volume-bar .thumb {
+    width: 12px;
+    height: 12px;
+    background-color: #AE2E2D;
+    border-radius: 50%;
+    position: absolute;
+    top: -3px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.volume-bar .thumb:hover {
+    background-color: #8b2323;
+}
+
+/* Layout Adjustments */
+.podcast-bar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.podcast-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+}
+
+.controls-volume {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+/* Media Queries for Enhanced Responsiveness */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+        max-width: 90%;
+    }
+
+    .controls button {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .volume-bar {
+        width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 15px;
+        max-width: 90%;
+    }
+    .controls {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .controls button {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    .volume-control {
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .volume-bar {
+        width: 80px;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="podcast-bar">
+            <div class="podcast-image" style="background: url('https://learn.g2.com/hubfs/FBE%20vs%20FDE.png') center/cover no-repeat;"></div>
+            <div class="progress-bar" onclick="seek(event)">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div class="current-time" id="currentTime">0:00 / 0:00</div>
+        </div>
+        <div class="controls">
+            <button onclick="togglePlayPause()">▶</button>
+            <button onclick="stopPodcast()">⏹</button>
+            <button onclick="downloadPodcast()">⤓</button>
+        <div class="volume-control">
+            <img id="volumeIcon" class="volume-icon" src="/content/enforced/6626-co_demo.instructor/volume-up-interface-symbol.png?isCourseFile=true" alt="Volume Icon">
+            <div class="volume-bar" id="volumeBar">
+                <div class="fill" id="fill" style="width: 50%;"></div>
+                <div class="thumb" id="thumb" style="left: 50%;"></div>
+            </div>
+        </div>
+        </div>
+  
+        
+    </div>
+
+    <audio id="podcast">
+        <source src="/content/enforced/8758-OMBFT402_Jan23/Podcast/File%20and%20Disk%20Encryption_%20Unit%2012.wav?isCourseFile=true" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const podcast = document.getElementById('podcast');
+        const currentTimeDisplay = document.getElementById('currentTime');
+        const progress = document.getElementById('progress');
+
+        function togglePlayPause() {
+            if (podcast.paused) {
+                podcast.play();
+                event.target.innerText = '⏸';
+            } else {
+                podcast.pause();
+                event.target.innerText = '▶';
+            }
+        }
+
+        function stopPodcast() {
+            podcast.pause();
+            podcast.currentTime = 0;
+            document.querySelector('.controls button').innerText = '▶';
+        }
+
+        function downloadPodcast() {
+            const link = document.createElement('a');
+            link.href = podcast.querySelector('source').src;
+            link.download = 'podcast.mp3';
+            link.click();
+        }
+
+        function seek(event) {
+            const rect = event.currentTarget.getBoundingClientRect();
+            const clickX = event.clientX - rect.left;
+            const width = rect.width;
+            const duration = podcast.duration;
+            podcast.currentTime = (clickX / width) * duration;
+        }
+
+        podcast.addEventListener('timeupdate', () => {
+            const percentage = (podcast.currentTime / podcast.duration) * 100;
+            progress.style.width = percentage + '%';
+            const minutes = Math.floor(podcast.currentTime / 60);
+            const seconds = Math.floor(podcast.currentTime % 60);
+            const totalMinutes = Math.floor(podcast.duration / 60);
+            const totalSeconds = Math.floor(podcast.duration % 60);
+            currentTimeDisplay.innerText = `${minutes}:${seconds < 10 ? '0' + seconds : seconds} / ${totalMinutes}:${totalSeconds < 10 ? '0' + totalSeconds : totalSeconds}`;
+        });
+        // Volume Control
+let volume = 50;
+let isMuted = false;
+const volumeIcon = document.getElementById('volumeIcon');
+const volumeBar = document.getElementById('volumeBar');
+const thumb = document.getElementById('thumb');
+const fill = document.getElementById('fill');
+
+// Initialize volume
+podcast.volume = volume / 100;
+
+volumeIcon.addEventListener('click', () => {
+    isMuted = !isMuted;
+    if (isMuted) {
+        volumeIcon.src = "https://collms.dpuerp.in/d2l/common/dialogs/quickLink/quickLink.d2l?ou=6626&type=coursefile&fileId=volume-off-indicator.png";
+        podcast.volume = 0;
+        fill.style.width = '0%';
+        thumb.style.left = '0%';
+    } else {
+        volumeIcon.src = "/content/enforced/6626-co_demo.instructor/volume-up-interface-symbol.png?isCourseFile=true";
+        podcast.volume = volume / 100;
+        thumb.style.left = volume + '%';
+        fill.style.width = volume + '%';
+    }
+});
+
+volumeBar.addEventListener('click', (event) => {
+    const rect = volumeBar.getBoundingClientRect();
+    const offsetX = event.clientX - rect.left;
+    const newVolume = (offsetX / volumeBar.offsetWidth) * 100;
+    volume = Math.max(0, Math.min(100, newVolume));
+    thumb.style.left = volume + '%';
+    fill.style.width = volume + '%';
+    podcast.volume = volume / 100;
+    isMuted = volume === 0;
+    volumeIcon.src = isMuted 
+        ? "https://collms.dpuerp.in/d2l/common/dialogs/quickLink/quickLink.d2l?ou=6626&type=coursefile&fileId=volume-off-indicator.png" 
+        : "/content/enforced/6626-co_demo.instructor/volume-up-interface-symbol.png?isCourseFile=true";
+});
+
+    </script>
+</body>
+</html>

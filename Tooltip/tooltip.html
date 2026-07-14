@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tooltip with Image and Video</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            text-align: justify;
+            margin-top: 50px;
+        }
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            color: black;
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .tooltip .tooltip-content {
+            visibility: hidden;
+            width: 100px;
+            background-color: #ae2e2d;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        .tooltip:hover .tooltip-content {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tooltip.bottom .tooltip-content {
+            top: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .tooltip-content img, .tooltip-content video {
+            border: solid 1px goldenrod;
+            width: 100%;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="tooltip bottom">Hover over this text (Image)
+        <div class="tooltip-content">
+            <p>Tooltip with an image</p>
+            <img src="img_5terre.jpg" alt="Tooltip Image">
+        </div>
+    </div>
+    <p>A tooltip is a small pop-up element that appears when a user hovers over a specific text, image, or other UI element. It provides additional information without cluttering the interface. In the case of text, tooltips can display definitions, explanations, or links. For images, they can provide descriptions or context about the visual content. Tooltips that include both text and images enhance user experience by offering a more engaging and informative display. These tooltips are commonly used in web applications, dashboards, and educational platforms to improve usability and accessibility.</p>
+
+    
+    <br><br>
+    
+    <div class="tooltip bottom">Hover over this text (Video)
+        <div class="tooltip-content">
+            <p>Tooltip with a video</p>
+            <video autoplay loop muted>
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+    <p>A tooltip for a video provides a dynamic way to display additional information when a user hovers over an element. Unlike standard tooltips with just text or images, video tooltips can showcase short clips, previews, or instructional content without requiring users to navigate away from the page. This enhances user engagement and provides a more interactive experience. Video tooltips are especially useful for tutorials, product demonstrations, and media-rich applications where a quick visual explanation is more effective than static text or images.</p>
+
+</body>
+</html>

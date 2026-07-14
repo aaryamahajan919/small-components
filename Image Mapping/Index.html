@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Mapping</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.image-container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px;
+}
+
+img {
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+    </style>
+</head>
+<body>
+    
+    <div class="image-container">
+        <img src="https://www.w3schools.com/w3images/mountains.jpg" usemap="#map1" alt="Nature Image 1">
+        <img src="https://www.w3schools.com/w3images/lights.jpg" usemap="#map2" alt="Nature Image 2">
+    </div>
+
+    <map name="map1">
+        <area shape="poly" coords="62, 298, 195, 312, 322, 339, 163, 241, 66, 295, 239, 323, 6, 395, 200, 327, 296, 214, 236, 129, 197, 16, 149, 315, 286, 254, 255, 232, 155, 191, 45, 139, 163, 143, 257, 161, 177, 190, 174, 536, 254, 225, 294, 225, 182" href="https://study.com/academy/lesson/mountain-definition-formation-characteristics-examples.html" target="_blank" alt="Component 1A">
+        <area shape="poly" coords="287, 258, 419, 286, 588, 322, 599, 397, 510, 394, 431, 352, 345, 290" href="https://www.britannica.com/science/river" target="_blank" alt="Component 1B">
+        <area shape="poly" coords="9, 115, 5, 8, 131, 7, 241, 8, 385, 5, 591, 7, 589, 150, 449, 160, 316, 147, 174, 131, 96, 490, 92, 404, 85, 253, 75, 124, 64, 42, 64" href="https://science.nasa.gov/skywatching/" target="_blank" alt="Component 1C">
+    </map>
+
+    <map name="map2">
+        <area shape="poly" coords="6, 224, 12, 308, 7, 393, 119, 385, 265, 391, 374, 391, 492, 393, 593, 393, 585, 291, 499, 312, 390, 322, 302, 297, 210, 272, 137, 255, 56, 238, 64, 282, 63, 346, 131, 317, 229, 330, 299, 346, 383, 339, 448, 358, 545, 342" href="https://earthobservatory.nasa.gov/images/85053/southernmost-seasonal-sea-ice-in-the-northern-hemisphere" target="_blank" alt="Component 2A">
+        <area shape="poly" coords="7, 8, 9, 70, 150, 232, 198, 220, 245, 190, 301, 152, 351, 208, 392, 158, 390, 118, 470, 111, 505, 46" href="https://www.space.com/15139-northern-lights-auroras-earth-facts-sdcmp.html" target="_blank" alt="Component 2B">
+    </map>
+
+
+</body>
+</html>

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video with Comments and Replies</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+
+        /* Video container styling */
+        #video-container {
+            width: 80%;
+            max-width: 1000px;
+            margin-bottom: 0;
+            position: relative;
+        }
+
+        iframe {
+            width: 100%;
+            height: 560px;
+            border: none;
+        }
+
+        #toggle-comments {
+            width: 80%; /* Same as video width */
+            max-width: 100%;
+            height: 50px;
+            background-color: #ae2e2d;
+            cursor: pointer;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            gap: 5px;
+            transition: all 0.3s ease;
+            margin-top: 10px; /* Adds space below the video */
+        }
+
+        #toggle-comments img {
+            width: 24px; /* Increased size of the arrow */
+            height: 24px;
+            margin-top: 5px; /* Adds spacing between text and arrow */
+        }
+
+        #toggle-comments:hover {
+            background-color: white;
+            color: black;
+        }
+
+        #toggle-comments:hover img {
+            filter: invert(0%);
+        }
+
+        /* Panel styling */
+        #comments-panel {
+            width: 80%;
+            max-width: 1000px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 10px;
+            display: none;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        #questions-container {
+            width: 100%;
+        }
+
+        .question-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+        }
+
+        .question-item p {
+            margin: 0;
+        }
+
+        .reply-button {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .reply-section {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .reply-input {
+            width: calc(100% - 20px);
+            padding: 5px;
+            margin-bottom: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+        padding: 20px 30px;
+        background-color: #ae2e2d;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        font-size: 16px;
+        height: 25px; /* Match the input height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    input[type="text"] {
+        height: 20px; /* Match the button height */
+        padding: 5px;
+    }
+
+        button:hover {
+            background-color: #c74f49;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Styling for the search icon inside the button */
+        #load-button img {
+            width: 20px;
+            height: 10px;
+            margin-right: 10px; /* Adds space between text and icon */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>YouTube Video with Comments and Replies</h1>
+
+    <!-- YouTube Video ID Input -->
+    <div id="question-form">
+        <label for="videoId">Enter YouTube Video ID:</label><br>
+        <div style="display: flex; align-items: center;">
+            <input type="text" id="videoId" placeholder="e.g., dQw4w9WgXcQ" style="margin-right: 10px;">
+            <button id="load-button" onclick="loadVideo()">Load here
+            </button>
+        </div>
+    </div>
+    
+    
+    
+
+    <!-- Video Container -->
+    <div id="video-container">
+        <iframe class="responsive-video-container" 
+                src="https://www.youtube.com/embed/Y8MjQ3X6ZGw?rel=0&amp;modestbranding=1&amp;" 
+                frameborder="0" 
+                allowfullscreen="allowfullscreen">
+        </iframe>
+    </div>
+
+    <!-- Button to toggle comments panel -->
+    <button id="toggle-comments" onclick="toggleCommentsPanel()">
+        Ask Questions Here
+    </button>
+
+    <!-- Comments Panel -->
+    <div id="comments-panel">
+        <div id="questions-container">
+            <h3>Questions & Replies</h3>
+            <input type="text" id="questionText" placeholder="Add your question here...">
+            <button onclick="submitQuestion()">Submit Question</button>
+            <div id="questions-list"></div>
+        </div>
+    </div>
+
+    <script>
+        // Function to load the YouTube video based on the video ID
+        function loadVideo() {
+            const videoId = document.getElementById("videoId").value.trim();
+            if (videoId) {
+                const iframe = document.querySelector("#video-container iframe");
+                iframe.src = `https://www.youtube.com/embed/${videoId}?rel=0&modestbranding=1`;
+                displayQuestions(videoId);
+            }
+        }
+
+        // Function to toggle the comments panel
+        function toggleCommentsPanel() {
+            const panel = document.getElementById("comments-panel");
+            panel.style.display = panel.style.display === "none" || panel.style.display === "" ? "flex" : "none";
+        }
+
+        // Function to submit a question
+        function submitQuestion() {
+            const videoId = document.getElementById("videoId").value.trim();
+            const questionText = document.getElementById("questionText").value.trim();
+
+            if (!videoId || !questionText) {
+                alert("Please load a video and enter a question.");
+                return;
+            }
+
+            const question = {
+                videoId,
+                text: questionText,
+                replies: [],
+                id: Date.now()
+            };
+
+            const existingQuestions = JSON.parse(localStorage.getItem("questions")) || [];
+            existingQuestions.push(question);
+            localStorage.setItem("questions", JSON.stringify(existingQuestions));
+
+            document.getElementById("questionText").value = '';
+            displayQuestions(videoId);
+        }
+
+        // Function to display questions and replies
+        function displayQuestions(videoId) {
+            const questionsContainer = document.getElementById("questions-list");
+            questionsContainer.innerHTML = '';
+
+            const allQuestions = JSON.parse(localStorage.getItem("questions")) || [];
+            const videoQuestions = allQuestions.filter(q => q.videoId === videoId);
+
+            if (videoQuestions.length === 0) {
+                questionsContainer.innerHTML = "<p>No questions submitted for this video yet.</p>";
+            } else {
+                videoQuestions.forEach(q => {
+                    const questionItem = document.createElement("div");
+                    questionItem.className = "question-item";
+                    questionItem.innerHTML = `
+                        <p><strong>Question:</strong> ${q.text}</p>
+                        <span class="reply-button" onclick="showReplyInput(${q.id})">Reply</span>
+                        <div id="reply-section-${q.id}" class="reply-section" style="display: none;">
+                            <input class="reply-input" id="reply-input-${q.id}" placeholder="Type your reply...">
+                            <button onclick="submitReply(${q.id}, document.getElementById('reply-input-${q.id}').value)">Reply</button>
+                        </div>
+                    `;
+
+                    q.replies.forEach(reply => {
+                        const replyDiv = document.createElement("div");
+                        replyDiv.className = "reply-section";
+                        replyDiv.innerHTML = `<p><strong>Reply:</strong> ${reply}</p>`;
+                        questionItem.appendChild(replyDiv);
+                    });
+
+                    questionsContainer.appendChild(questionItem);
+                });
+            }
+        }
+
+        function submitReply(questionId, replyText) {
+            const videoId = document.getElementById("videoId").value.trim();
+            const existingQuestions = JSON.parse(localStorage.getItem("questions")) || [];
+            const questionIndex = existingQuestions.findIndex(q => q.id === questionId);
+
+            if (questionIndex !== -1) {
+                existingQuestions[questionIndex].replies.push(replyText);
+                localStorage.setItem("questions", JSON.stringify(existingQuestions));
+                displayQuestions(videoId);
+            }
+        }
+
+        function showReplyInput(questionId) {
+            const replySection = document.getElementById(`reply-section-${questionId}`);
+            replySection.style.display = replySection.style.display === "none" ? "block" : "none";
+        }
+    </script>
+</body>
+</html>

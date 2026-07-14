@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio & Video Podcast Player</title>
+    <style>
+        /* body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            flex-direction: column;
+        } */
+
+        .container {
+            justify-content: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 320px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease-in ease-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+
+        .container.open {
+            opacity: 1;
+            pointer-events: auto;
+            max-height: fit-content;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        video, audio {
+            width: 100%;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .controls {
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #AE2E2D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #881f1e;
+        }
+
+        .currentTime {
+            margin-top: 10px;
+        }
+
+        .link {
+            border: none;
+            color: rgb(170, 49, 23);
+            border: 2px solid rgb(170, 49, 23);
+            padding: 10px 50px 10px 50px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            margin: 4px 2px;
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .link:hover {
+            background-color: rgb(170, 49, 23);
+            color: white;
+        }
+
+        /* Align the toggle button to the top */
+        .toggle-btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="toggle-btn-container">
+        <h3 align="center">
+            <u>
+                <a href="#" class="link toggle-btn" onclick="togglePlayer()">
+                    <strong>Podcast Here</strong>
+                </a>
+            </u>
+        </h3>
+
+        <div class="container" id="podcastContainer">
+            <h1>Podcast Player</h1>
+            
+            <h2>Video Podcast</h2>
+            <video id="video" controls>
+                <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="controls">
+                <button onclick="playVideo()">Play</button>
+                <button onclick="pauseVideo()">Pause</button>
+                <button onclick="stopVideo()">Stop</button>
+            </div>
+            <div class="currentTime" id="videoTime">Current Time: 0:00</div>
+            
+            <h2>Audio Podcast</h2>
+            <audio id="podcast" controls>
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                Your browser does not support the audio tag.
+            </audio>
+            <div class="controls">
+                <button onclick="playAudio()">Play</button>
+                <button onclick="pauseAudio()">Pause</button>
+                <button onclick="stopAudio()">Stop</button>
+            </div>
+            <div class="currentTime" id="audioTime">Current Time: 0:00</div>
+        </div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const podcast = document.getElementById('podcast');
+        const videoTimeDisplay = document.getElementById('videoTime');
+        const audioTimeDisplay = document.getElementById('audioTime');
+        const podcastContainer = document.getElementById('podcastContainer');
+
+        function updateVideoTime() {
+            const minutes = Math.floor(video.currentTime / 60);
+            const seconds = Math.floor(video.currentTime % 60);
+            videoTimeDisplay.innerText = `Current Time: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+        }
+
+        function updateAudioTime() {
+            const minutes = Math.floor(podcast.currentTime / 60);
+            const seconds = Math.floor(podcast.currentTime % 60);
+            audioTimeDisplay.innerText = `Current Time: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+        }
+
+        video.addEventListener('timeupdate', updateVideoTime);
+        podcast.addEventListener('timeupdate', updateAudioTime);
+
+        function playVideo() {
+            video.play();
+        }
+
+        function pauseVideo() {
+            video.pause();
+        }
+
+        function stopVideo() {
+            video.pause();
+            video.currentTime = 0;
+            updateVideoTime();
+        }
+
+        function playAudio() {
+            podcast.play();
+        }
+
+        function pauseAudio() {
+            podcast.pause();
+        }
+
+        function stopAudio() {
+            podcast.pause();
+            podcast.currentTime = 0;
+            updateAudioTime();
+        }
+
+        function togglePlayer() {
+            podcastContainer.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>

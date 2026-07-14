@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Links</title>
+
+    <style>
+        /* General Styles for Body, Headings */
+        body, h1, h2 {
+            margin: 0; padding: 0; font-family: Arial, sans-serif; text-align: center;
+        }
+        body {
+            display: flex; align-items: center; justify-content: center; background: #f0f0f0; min-height: 100vh;
+        }
+        /* Container Styles */
+        .ODCScontainer {
+            display: flex; 
+            width: 90%; 
+            max-width: 1200px; 
+            background: #fff;
+            border-radius: 10px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+            overflow: hidden;
+            flex-direction: row; /* Two-column layout */
+            border: 2px solid #fac23d; /* Add border with color #fac23d */
+        }
+        /* Styles for the Link Section */
+        .link-section {
+            width: 40%; /* Take up 40% of the container */
+            padding: 20px; background: #AE2E2D; /* Deep Red Background */
+            border-right: 1px solid #ddd; overflow-y: auto;
+            display: flex; flex-direction: column; align-items: center;
+        }
+        .link-section h2 {
+            color: #fff; /* White Text */
+            font-size: 32px; /* Larger Font Size */
+            margin-bottom: 20px; /* Space Below Heading */
+        }
+        .link-section ul {
+            list-style: none; padding: 0; margin: 0;
+        }
+        .link-section a {
+            display: block; margin: 10px 0; font-weight: bold; text-decoration: none;
+            font-size: 18px; color: #fff; /* White Text */
+        }
+        .link-section a:hover {
+            color: #881f1e; /* Darker Red on Hover */
+        }
+        
+        /* Styles for the Video Player Section */
+        .player-section {
+            width: 60%; /* Take up 60% of the container */
+            padding: 20px; text-align: center; background-color: #f5f1e6; /* Cream Background */
+            display: flex; flex-direction: column; align-items: center; /* Center Content Vertically and Horizontally */
+        }
+        .player-section h2 {
+            color: #AE2E2D; /* Deep Red Text */
+            font-size: 32px; /* Larger Font Size */
+            margin-bottom: 20px; /* Space Below Heading */
+        }
+        /* Styles for the Video Player Wrapper */
+        .player-wrapper {
+            position: relative; padding-bottom: 56.25%; height: 0; width: 100%;
+            border: 2px solid #ddd; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .player-wrapper iframe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 10px;
+        }
+
+        /* Dropdown Styling */
+        .dropdown-container {
+            position: relative;
+            width: 100%;
+            background-color: #f5f1e6;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding-right: 30px; /* Space for the arrow */
+            cursor: pointer; /* Add pointer cursor for the input field */
+            text-align: center; /* Center the text */
+        }
+
+        /* Actual arrow element */
+        .arrow {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 14px;
+            color: #555;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Arrow toggling for upward */
+        .dropdown-container.active .arrow {
+            transform: translateY(-50%) rotate(180deg); /* Rotate the arrow to point upwards */
+        }
+
+        .dropdown-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            border: 1px solid #fac23d;
+            background-color: white;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1;
+            display: none; /* Initially hidden */
+        }
+
+        .dropdown-list option {
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            border-bottom: 1px solid #fac23d;
+        }
+
+        .dropdown-list option:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 767px) {
+            .ODCScontainer { flex-direction: column; }
+            .link-section, .player-section { width: 100%; border-right: none; border-bottom: 1px solid #ddd; }
+            .player-wrapper {
+                border-width: 1px;
+                box-shadow: none;
+            }
+        }
+        @media (max-width: 480px) {
+            .ODCScontainer { width: 100%; }
+            .dropdown-list { font-size: 16px; padding: 8px; }
+            .player-section { padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="ODCScontainer">
+        <!-- Link Section for Dropdown Menus -->
+        <div class="link-section">
+            <h2>Online Doubt Clearing Session</h2>
+            <p></p>
+            <!-- Dropdown for Doubt Clearing Sessions -->
+            <div class="dropdown-container" id="dropdown-container">
+                <input type="text" id="session-input" placeholder="Select your session" readonly onclick="toggleDropdown()">
+                <div class="arrow" onclick="toggleDropdown()">&#x25BC;</div> <!-- Arrow element -->
+                <div class="dropdown-list" id="session-dropdown">
+                    <option value="CAOnBGvWMkA" onclick="selectOption(this); playVideo(this.value);">UNIT 1 - 19 Jul 2024</option>
+                    <option value="Gq_I3rZC1-M" onclick="selectOption(this); playVideo(this.value);">UNIT 1 - 26 Jul 2024</option>
+                    <option value="CJtWW9Ra5gc" onclick="selectOption(this); playVideo(this.value);">Miscellaneous - 31 Jul 2024</option>
+                    <option value="CXeUpLxRp-U" onclick="selectOption(this); playVideo(this.value);">UNIT 2 - 01 Aug 2024</option>
+                    <option value="l4zC99LFn08" onclick="selectOption(this); playVideo(this.value);">UNIT 2 - 02 Aug 2024</option>
+                    <option value="7OaohTXAiSU" onclick="selectOption(this); playVideo(this.value);">UNIT 3 - 09 Aug 2024</option>
+                    <option value="nvXCMGBQowI" onclick="selectOption(this); playVideo(this.value);">Prof. Manashi Medhi</option>
+                    <option value="2KQfo3xhYnc" onclick="selectOption(this); playVideo(this.value);">Prof. Sandeep Singh</option>
+                    <option value="53dzrBtLgeI" onclick="selectOption(this); playVideo(this.value);">Mr. Shantnoo Patnaik</option>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Section to Display Selected Video -->
+        <div class="player-section">
+            <h2 id="videoTitle">Online Doubt Clearing Session</h2>
+            <!-- Video Player Wrapper -->
+            <div class="player-wrapper">
+                <iframe id="videoPlayer" frameborder="0" allowfullscreen="allowfullscreen"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Object containing video IDs and their corresponding titles
+        const videoTitles = {
+            "CAOnBGvWMkA": "Unit 1: Introduction to Managerial Economics",
+            "Gq_I3rZC1-M": "Unit 1: Introduction to Managerial Economics",
+            "CJtWW9Ra5gc": "Unit 2: Demand Analysis1",
+            "CXeUpLxRp-U": "Unit 2: Demand Analysis2",
+            "l4zC99LFn08": "Unit 3: Elasticity of Demand and Forecasting of Demand",
+            "7OaohTXAiSU": "Unit 3: Elasticity of Demand and Forecasting of Demand",
+            "nvXCMGBQowI": "Unit 2: Demand Analysis3",
+            "2KQfo3xhYnc": "Unit 2: Demand Analysis4",
+            "53dzrBtLgeI": "Unit 2: Demand Analysis5"
+        };
+
+        // Function to update the video player source and title based on selected video ID
+        function playVideo(id) {
+            document.getElementById('videoPlayer').src = `https://www.youtube.com/embed/${id}`;
+            document.getElementById('videoTitle').textContent = videoTitles[id] || 'Select a video';
+        }
+
+        // Toggle the dropdown visibility and arrow direction
+        function toggleDropdown() {
+            const dropdown = document.getElementById('session-dropdown');
+            const container = document.getElementById('dropdown-container');
+
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';
+                container.classList.remove('active'); // Arrow points down
+            } else {
+                dropdown.style.display = 'block';
+                container.classList.add('active'); // Arrow points up
+            }
+        }
+
+        // Select an option and fill the input field
+        function selectOption(option) {
+            document.getElementById('session-input').value = option.textContent;
+            toggleDropdown();  // Close the dropdown and toggle the arrow
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const container = document.getElementById('dropdown-container');
+            const dropdown = document.getElementById('session-dropdown');
+            if (!container.contains(event.target)) {
+                dropdown.style.display = 'none';
+                container.classList.remove('active'); // Arrow points down
+            }
+        });
+    </script>
+</body>
+</html>

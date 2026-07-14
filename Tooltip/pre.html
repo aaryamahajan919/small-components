@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body {
+        font-family: 'Times New Roman', serif;
+        text-align: justify;
+        margin-top: 50px;
+    }
+       .tooltip-inner {
+      background-color: rgb(238, 230, 230);
+      color: #000 !important;
+      text-align: justify;
+      max-width: 200px;
+      border: 2px solid #ae2e2d !important;
+      transition: opacity 1 ease-in-out;
+    }
+    .tooltip.bs-tooltip-top .tooltip-arrow::before,
+    .tooltip.bs-tooltip-bottom .tooltip-arrow::before,
+    .tooltip.bs-tooltip-left .tooltip-arrow::before,
+    .tooltip.bs-tooltip-right .tooltip-arrow::before {
+      border-top-color: #ae2e2d !important;
+    }
+    .tooltip-inner img {
+      display: block;
+      margin: 0 auto;
+      border: 2px solid #fac23d;
+      padding: 3px;
+      max-width: 80px;
+    }
+    .tooltip-inner h4 {
+      text-align: center;
+      margin-top: 3px;
+    }
+    .tooltip-inner p {
+      text-align: justify;
+    }
+    .tooltip-trigger {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    </style>
+</head>
+
+<body>
+    <p><span class="tooltip-trigger" id="greenHat">"Green Hat Hackers"</span> are slightly better than script kiddies. Green hats are trying to acquire actual hacking skills and are learning new techniques to update their knowledge and work towards becoming professional hackers like the White hats (hopefully not black hats or grey hats).</p>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    </p>
+    <p><script>
+        document.addEventListener("DOMContentLoaded", function () {
+          var currentTooltip = null; // Track the current tooltip instance
+    
+          var hackers = {
+            "blackHat": {
+              image: "https://collms.dpuerp.in/d2l/common/dialogs/quickLink/quickLink.d2l?ou=8758&type=coursefile&fileId=tooltip/black.png",
+              title: "Black Hat Hackers",
+              description: "Malicious hackers who engage in illegal activities for personal gain."
+            },
+            "whiteHat": {
+              image: "https://collms.dpuerp.in/d2l/common/dialogs/quickLink/quickLink.d2l?ou=8758&type=coursefile&fileId=tooltip/white.jpg",
+              title: "White Hat Hackers",
+              description: "Ethical hackers working to protect systems and networks."
+            },
+            "greyHat": {
+              image: "https://collms.dpuerp.in/d2l/common/dialogs/quickLink/quickLink.d2l?ou=8758&type=coursefile&fileId=tooltip/grey.jfif",
+              title: "Grey Hat Hackers",
+              description: "Hackers who mix both ethical and malicious activities."
+            },
+            "scriptKiddies": {
+              image: "https://collms.dpuerp.in/d2l/common/dialogs/quickLink/quickLink.d2l?ou=8758&type=coursefile&fileId=tooltip/script.jfif",
+              title: "Script Kiddies",
+              description: "Beginners who use downloaded scripts without understanding hacking techniques."
+            },
+            "greenHat": {
+              image: "https://collms.dpuerp.in/d2l/common/dialogs/quickLink/quickLink.d2l?ou=8758&type=coursefile&fileId=tooltip/green.png",
+              title: "Green Hat Hackers",
+              description: "Novice hackers who are learning and improving their skills."
+            },
+            "redHat": {
+              image: "https://collms.dpuerp.in/d2l/common/dialogs/quickLink/quickLink.d2l?ou=8758&type=coursefile&fileId=tooltip/red.png",
+              title: "Red Hat Hackers",
+              description: "Aggressive hackers who destroy black hat systems in retaliation."
+            },
+            "blueHat": {
+              image: "https://collms.dpuerp.in/d2l/common/dialogs/quickLink/quickLink.d2l?ou=8758&type=coursefile&fileId=tooltip/blue.png",
+              title: "Blue Hat Hackers",
+              description: "Former black hats who now use their skills for good, often hired by security companies."
+            },
+            "hacktivists": {
+              image: "https://collms.dpuerp.in/d2l/common/dialogs/quickLink/quickLink.d2l?ou=8758&type=coursefile&fileId=tooltip/hactivist.jfif",
+              title: "Hacktivists",
+              description: "Activists who use hacking skills to expose wrongs in society."
+            }
+          };
+    
+          Object.keys(hackers).forEach(function (id) {
+            var trigger = document.getElementById(id);
+            var hacker = hackers[id];
+    
+            var tooltip = new bootstrap.Tooltip(trigger, {
+              trigger: "manual",
+              html: true,
+              title: `<div>
+                        <img src='${hacker.image}' alt='${hacker.title}'>
+                        <h4>${hacker.title}</h4>
+                        <p>${hacker.description}</p>
+                      </div>`
+            });
+    
+            trigger.addEventListener("mouseenter", function () {
+              if (currentTooltip) {
+                currentTooltip.hide(); // Hide the current tooltip if any
+              }
+              tooltip.show();
+              currentTooltip = tooltip; // Update the current tooltip
+            });
+    
+            trigger.addEventListener("click", function () {
+              if (currentTooltip) {
+                currentTooltip.hide(); // Hide the current tooltip if any
+              }
+              tooltip.show();
+              currentTooltip = tooltip; // Update the current tooltip
+            });
+    
+            // Hide tooltip immediately when mouse leaves the trigger or the tooltip itself
+            trigger.addEventListener("mouseleave", function () {
+              tooltip.hide();
+              currentTooltip = null; // Clear current tooltip tracking
+            });
+    
+            document.addEventListener("click", function (event) {
+              if (!trigger.contains(event.target) && !document.querySelector(".tooltip").contains(event.target)) {
+                tooltip.hide();
+                currentTooltip = null; // Clear current tooltip tracking
+              }
+            });
+          });
+        });
+      </script>
+</body>
+</html>

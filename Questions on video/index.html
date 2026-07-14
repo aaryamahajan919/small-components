@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Loader</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        iframe {
+            margin-top: 20px;
+            width: 560px;
+            height: 315px;
+            border: none;
+        }
+        button{
+            background-color: #ae2e2d;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>YouTube Video Loader</h1>
+    <input type="text" id="youtubeID" placeholder="Enter YouTube Video ID" style="width: 300px; padding: 10px; font-size: 16px;">
+    <button id="toggle-comments" onclick="loadVideo()" style="padding: 10px 20px; font-size: 16px; margin-left: 10px;">Load Here</button>
+    <div>
+        <iframe id="videoFrame" src="" allowfullscreen></iframe>
+    </div>
+
+    <script>
+        function loadVideo() {
+            const videoID = document.getElementById('youtubeID').value.trim();
+            const iframe = document.getElementById('videoFrame');
+            
+            if (videoID) {
+                iframe.src = `https://www.youtube.com/embed/${videoID}`;
+            } else {
+                alert('Please enter a valid YouTube Video ID!');
+                iframe.src = ""; // Clear the iframe if input is empty
+            }
+        }
+    </script>
+</body>
+</html>

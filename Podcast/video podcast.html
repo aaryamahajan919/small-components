@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Podcast Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        video {
+            width: 100%;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .controls {
+            margin: 20px 0;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #AE2E2D;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            background-color: #881f1e;
+        }
+
+        #currentTime {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Video Podcast Player</h1>
+        <video id="video" controls>
+            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="controls">
+            <button onclick="playMedia()">Play</button>
+            <button onclick="pauseMedia()">Pause</button>
+            <button onclick="stopMedia()">Stop</button>
+        </div>
+        <div id="currentTime">Current Time: 0:00</div>
+    </div>
+
+    <script>
+        const video = document.getElementById('video');
+        const currentTimeDisplay = document.getElementById('currentTime');
+
+        function syncTime() {
+            const minutes = Math.floor(video.currentTime / 60);
+            const seconds = Math.floor(video.currentTime % 60);
+            currentTimeDisplay.innerText = `Current Time: ${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+        }
+
+        video.addEventListener('timeupdate', syncTime);
+
+        function playMedia() {
+            video.play();
+        }
+
+        function pauseMedia() {
+            video.pause();
+        }
+
+        function stopMedia() {
+            video.pause();
+            video.currentTime = 0;
+            syncTime();
+        }
+    </script>
+</body>
+</html>

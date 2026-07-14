@@ -1,0 +1,130 @@
+
+***CSS***
+
+ /* google translator */
+
+#google_translate_element {
+    margin-top: 20px;
+}
+
+/* Style the dropdown box */
+.goog-te-combo {
+    appearance: none; /* Remove default dropdown arrow */
+    -webkit-appearance: none; /* Remove default dropdown arrow for Safari */
+    -moz-appearance: none; /* Remove default dropdown arrow for Firefox */
+    background: linear-gradient(135deg, #f5f1e6, #eae5d8); /* Soft beige gradient */
+    border: 1px solid #ae2e2d; /* Burgundy border */
+    font-weight: bold;
+    border-radius: 4px; /* Slightly rounded corners */
+    padding: 5px 10px; /* Padding inside the dropdown */
+    color: #ae2e2d; /* Burgundy text color */
+    font-size: 14px; /* Font size */
+    font-family: 'Arial', sans-serif; /* Clean, modern font */
+    width: 200px; /* Width of the dropdown */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 24 24" fill="none" stroke="%23ae2e2d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>'); /* Custom arrow using SVG */
+    background-repeat: no-repeat;
+    background-position: right 12px center; /* Position the custom arrow */
+    background-size: 12px; /* Size of the custom arrow */
+    transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect on the dropdown */
+.goog-te-combo:hover {
+    background: white; /* Slightly darker beige on hover */
+    transform: translateY(-2px); /* Slight lift on hover */
+}
+
+/* Change the color of the dropdown options */
+.goog-te-combo option {
+    background-color: #ffffff; /* White background for options */
+    color: #ae2e2d; /* Burgundy text for options */
+}
+
+/* Change the color of the dropdown options on hover */
+.goog-te-combo option:hover {
+    background-color: #f5f1e6; /* Beige background color on hover */
+    color: #ae2e2d; /* Burgundy text color on hover */
+}
+/* paragraph translate */
+  /* Style for the translate buttons */
+        .translate-Pbutton {
+            background: #ae2e2d;
+            border: none; /* Remove default border */
+            color: white; /* White text */
+            padding: 10px 17px; /* Add some padding */
+            text-align: center; /* Center the text */
+            text-decoration: none; /* Remove underline */
+            display: inline-block; /* Align buttons side by side */
+            font-size: 16px; /* Increase font size */
+            margin: 8px 6px; /* Add margin between buttons */
+            cursor: pointer; /* Add pointer cursor on hover */
+            border-radius: 3px; /* Rounded corners */
+            border-color: #ae2e2d;
+            transition-duration: 0.3s ease 0s; /* Smooth transition for hover effects */
+            width: auto;
+            flex: 1;
+        }
+
+        .translate-Pbutton:hover {
+            background-color: white; /* White background on hover */
+            color: #ae2e2d; /* Red text on hover */
+            border: 2px solid; /* Add red border */
+        }
+
+        .ak {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+            gap: 10px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .translate-Pbutton {
+                font-size: 14px;
+                padding: 8px 14px;
+                margin: 6px 4px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .translate-Pbutton {
+                font-size: 12px;
+                padding: 6px 12px;
+                margin: 4px 2px;
+                flex: 1 1 100%; /* Stack buttons vertically on small screens */
+            }
+        }
+
+
+        /* Responsive adjustments for text */
+        @media (max-width: 768px) {
+            #text-to-translate {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #text-to-translate {
+                padding: 6px;
+            }
+        }
+
+    
+ 
+***HTML***
+
+  <div id="google_translate_container">
+    <div id="google_translate_element"></div>
+  </div>
+
+
+***Javascript***
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Styled Google Translate Widget</title>
+  <style>
+    /* Container for styling and hiding unwanted elements */
+    #google_translate_container {
+        width: 200px;
+        height: 150px;
+      display: inline-block;
+      position: relative;
+      border: 2px solid #ae2e2d; /* Border color of the frame */
+      border-radius: 4px; /* Rounded corners */
+      background-color: #ae2e2d; /* Background color of the frame */
+      padding: 5px; /* Padding inside the frame */
+      z-index: 1; /* Ensure the frame is behind the container */
+    }
+
+    /* Hide all unwanted elements inside the Google Translate container */
+    #google_translate_element {
+      position: relative;
+      z-index: 2; /* Ensure the element is above the frame */
+    }
+    
+    .skiptranslate,
+    .goog-te-banner-frame,
+    .goog-te-menu-frame,
+    .goog-te-menu2,
+    .goog-te-menu2-item,
+    .goog-te-menu2-item div,
+    .goog-te-menu2-item span,
+    .goog-te-gadget,
+    .goog-te-gadget-simple,
+    .goog-te-gadget-simple .goog-te-menu-value,
+    .goog-te-gadget-simple .goog-te-menu-value span {
+      display: none !important;
+    }
+
+    /* Style the dropdown box */
+    .goog-te-combo {
+      background-color: #fff; /* Background color for the input box */
+      border: 1px solid #ccc; /* Border color for the input box */
+      padding: 5px; /* Padding inside the input box */
+      border-radius: 4px; /* Rounded corners for the input box */
+      font-size: 14px; /* Font size for the dropdown text */
+      width: 100%; /* Full width to fit the frame */
+      box-sizing: border-box; /* Ensures padding and border are included in the width */
+    }
+    
+  </style>
+</head>
+<body>
+
+  <div id="google_translate_container">
+    <div id="google_translate_element"></div>
+  </div>
+
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>

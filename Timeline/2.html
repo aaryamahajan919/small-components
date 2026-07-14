@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2024 Events Timeline</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+
+    .timeline {
+      position: relative;
+      max-width: 60%;
+      width: 100%;
+      margin: 0 auto;
+      overflow-y: auto;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .timeline::before {
+      content: '';
+      position: fixed;
+      left: 50%;
+      top: 0;
+      width: 2px;
+      background-color: #3498db;
+      transform: translateX(-50%);
+      height: 100vh;
+    }
+
+    .timeline-event {
+      display: flex;
+      cursor: pointer;
+      justify-content: flex-start;
+      margin: 20px 0;
+      position: relative;
+    }
+
+    .timeline-event img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-right: 20px;
+    }
+
+    .timeline-event-content {
+      background-color: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      flex: 1;
+      position: relative;
+    }
+
+    .timeline-event h3 {
+      margin-top: 0;
+      color: #333;
+    }
+
+    .timeline-event p {
+      color: #666;
+    }
+
+    .timeline-date {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      color: #3498db;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    /* Modal styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 100%;
+      width: 900px;
+      text-align: center;
+    }
+
+    .modal-content img {
+      width: 100%;
+      max-width: 700px;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .modal h1 {
+      color: #333;
+    }
+
+    .modal p, ul {
+      text-align: justify;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 30px;
+      color: #333;
+      cursor: pointer;
+    }
+    @media (max-width: 1024px) {
+  .timeline {
+    max-width: 90%; /* Increase width for smaller screens */
+  }
+
+  .timeline-event {
+    flex-direction: column; /* Stack image and content vertically */
+    align-items: center;
+    text-align: center;
+  }
+
+  .timeline-event img {
+    width: 100%; /* Make images responsive */
+    height: auto;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .timeline-event-content {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .timeline-date {
+    position: relative; /* Move date to static position */
+    right: auto;
+    top: auto;
+    margin-top: 10px;
+  }
+
+  .timeline::before {
+    left: 10px; /* Adjust vertical line position */
+  }
+}
+
+@media (max-width: 600px) {
+  .timeline {
+    max-width: 95%;
+    padding: 10px;
+  }
+
+  .modal-content {
+    width: 90%; /* Adjust modal width */
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .modal-content img {
+    max-width: 100%;
+  }
+
+  .close-btn {
+    font-size: 24px;
+    top: 5px;
+    right: 5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 90%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .timeline::before {
+    left: 50%;
+  }
+}
+
+  </style>
+</head>
+<body>
+  <div class="timeline">
+    <div class="timeline-event" onclick="openModal('new-year')">
+      <img src="https://images.axios.com/2Wg_yUnlowAZFA-NOPJYJ-66XUo=/1920x1080/smart/2024/01/01/1704115759135.jpg" alt="New Year's Eve">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Jan 1, 2024</div>
+        <h3>New Year's Day 2024</h3>
+        <p>Celebration of the beginning of a new year globally with fireworks, parties, and resolutions.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event" onclick="openModal('winter-olympics')">
+      <img src="https://www.ccjk.com/content/uploads/2024/01/Winter-Olympics-776x321-1.webp" alt="Winter Olympics">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Feb 1, 2024</div>
+        <h3>2024 Winter Olympics in Italy</h3>
+        <p>The Winter Olympics were held in Milan-Cortina, Italy, with global athletes competing in winter sports.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event" onclick="openModal('world-expo')">
+      <img src="https://aiph.org/wp-content/uploads/2022/12/WechatIMG171.jpg" alt="World Expo 2024">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Oct 1, 2024</div>
+        <h3>World Expo 2024</h3>
+        <p>2024 World Expo begins, a global event focusing on innovation, technology, and culture.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event" onclick="openModal('elections')">
+      <img src="https://images.theconversation.com/files/630276/original/file-20241106-15-t59zsn.png?ixlib=rb-4.1.0&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip" alt="2024 Elections">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Nov 3, 2024</div>
+        <h3>2024 U.S. Presidential Election</h3>
+        <p>The U.S. holds its Presidential election, where voters decide the future leadership of the country.</p>
+      </div>
+    </div>
+
+
+
+  <!-- Modal for New Year's Day -->
+  <div id="new-year-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('new-year')">&times;</span>
+      <h1>New Year's Day 2024</h1>
+      <img src="https://images.axios.com/2Wg_yUnlowAZFA-NOPJYJ-66XUo=/1920x1080/smart/2024/01/01/1704115759135.jpg" alt="New Year's Eve">
+      <p>Auckland was the first major city to welcome 2025 with thousands of revellers counting down to the New Year and cheering at colourful fireworks launched from New Zealand’s tallest structure, the Sky Tower, and a spectacular downtown light show.
+
+        Countries in the South Pacific are the first to ring in the New Year with midnight in New Zealand striking 18 hours before the ball drop in Times Square in New York.
+        
+        In Australia, fireworks blasted off the Sydney Harbour Bridge and across the bay to welcome the New Year. More than a million people had gathered at Sydney Harbour for the celebration featuring British pop star Robbie Williams, who led a singalong with the crowd.
+        
+        The upcoming Year of the Snake in the Asian zodiac is heralded as one of rebirth, alluding to the reptile’s shedding of its skin. Stores in Japan, which observes the zodiac cycle from January 1, have been selling tiny figures of smiling snakes and other snake-themed products. Other places in Asia will start marking the Year of the Snake later with the Lunar New Year.</p>
+    </div>
+  </div>
+
+  <!-- Modal for Winter Olympics -->
+  <div id="winter-olympics-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('winter-olympics')">&times;</span>
+      <h1>2024 Winter Olympics in Italy</h1>
+      <img src="https://www.ccjk.com/content/uploads/2024/01/Winter-Olympics-776x321-1.webp" alt="Winter Olympics">
+      <p>The 4th Winter Youth Olympic Games took place in the province of Gangwon in the Republic of Korea, which already hosted the Olympic Winter Games PyeongChang 2018. These first Winter YOG to be held in Asia build on the Olympic Games legacy and did engage even more young people through various activities before, throughout and after the Games.
+
+        The vision of Gangwon 2024 was to let the youth celebrate peaceful coexistence and unity through sport to create a better future together. The aim was to drive positive change and social unity in the region, impacting society in the areas of sport, culture and education. Gangwon 2024 did benefit from many of the facilities used for PyeongChang 2018. This will ensured a cost-efficient and sustainable YOG, and, at the same time, provided the participating athletes with the opportunity to compete in some of the same sites as Olympians did a few years before.</p>
+    </div>
+  </div>
+
+  <!-- Modal for World Expo -->
+  <div id="world-expo-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('world-expo')">&times;</span>
+      <h1>World Expo 2024</h1>
+      <img src="https://aiph.org/wp-content/uploads/2022/12/WechatIMG171.jpg" alt="World Expo 2024">
+      <p>There are multiple expos in 2024, including the World Trade Expo, the Valve World Expo, the Compounding World Expo, and the Grains World Conference & Expo. 
+        <ul><b>World Trade Expo 2024</b>
+            <ol>A platform for trade, investment, technology, tourism, and education</ol>
+              <ol>A chance for businesses to connect with Indian MSMEs, startups, and corporate houses</ol>
+                <ol>The theme is "Innovation for Sustainability – Green & Renewable Energy"</ol>
+        <b>Valve World Expo 2024</b>
+          <ol>A platform for the global valve industry</ol>
+            <ol>A meeting point for the valve community</ol>
+              <ol>A showcase for technological innovation</ol>
+                <ol>A platform for collaboration across industries and borders</ol>
+
+      </ul></p>
+    </div>
+  </div>
+
+  <!-- Modal for Elections -->
+  <div id="elections-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('elections')">&times;</span>
+      <h1>2024 U.S. Presidential Election</h1>
+      <img src="https://images.theconversation.com/files/630276/original/file-20241106-15-t59zsn.png?ixlib=rb-4.1.0&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip" alt="2024 Elections">
+      <p>Donald Trump will be America’s 47th president, after mounting the most momentous comeback in political history that will hand him massive, disruptive power at home and will send shockwaves around the world. Four years after leaving Washington as a pariah, following his attempt to overturn the 2020 election to stay in office, Trump’s victory defied two assassination attempts, two presidential impeachments, his criminal conviction and many other criminal charges.</p>
+    </div>
+  </div>
+
+
+    <div class="timeline-event" onclick="openModal('new-year')">
+      <img src="https://images.axios.com/2Wg_yUnlowAZFA-NOPJYJ-66XUo=/1920x1080/smart/2024/01/01/1704115759135.jpg" alt="New Year's Eve">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Jan 1, 2024</div>
+        <h3>New Year's Day 2024</h3>
+        <p>Celebration of the beginning of a new year globally with fireworks, parties, and resolutions.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event" onclick="openModal('winter-olympics')">
+      <img src="https://www.ccjk.com/content/uploads/2024/01/Winter-Olympics-776x321-1.webp" alt="Winter Olympics">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Feb 1, 2024</div>
+        <h3>2024 Winter Olympics in Italy</h3>
+        <p>The Winter Olympics were held in Milan-Cortina, Italy, with global athletes competing in winter sports.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event" onclick="openModal('world-expo')">
+      <img src="https://aiph.org/wp-content/uploads/2022/12/WechatIMG171.jpg" alt="World Expo 2024">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Oct 1, 2024</div>
+        <h3>World Expo 2024</h3>
+        <p>2024 World Expo begins, a global event focusing on innovation, technology, and culture.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event" onclick="openModal('elections')">
+      <img src="https://images.theconversation.com/files/630276/original/file-20241106-15-t59zsn.png?ixlib=rb-4.1.0&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip" alt="2024 Elections">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Nov 3, 2024</div>
+        <h3>2024 U.S. Presidential Election</h3>
+        <p>The U.S. holds its Presidential election, where voters decide the future leadership of the country.</p>
+      </div>
+    </div>
+
+
+
+  <!-- Modal for New Year's Day -->
+  <div id="new-year-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('new-year')">&times;</span>
+      <h1>New Year's Day 2024</h1>
+      <img src="https://images.axios.com/2Wg_yUnlowAZFA-NOPJYJ-66XUo=/1920x1080/smart/2024/01/01/1704115759135.jpg" alt="New Year's Eve">
+      <p>Auckland was the first major city to welcome 2025 with thousands of revellers counting down to the New Year and cheering at colourful fireworks launched from New Zealand’s tallest structure, the Sky Tower, and a spectacular downtown light show.
+
+        Countries in the South Pacific are the first to ring in the New Year with midnight in New Zealand striking 18 hours before the ball drop in Times Square in New York.
+        
+        In Australia, fireworks blasted off the Sydney Harbour Bridge and across the bay to welcome the New Year. More than a million people had gathered at Sydney Harbour for the celebration featuring British pop star Robbie Williams, who led a singalong with the crowd.
+        
+        The upcoming Year of the Snake in the Asian zodiac is heralded as one of rebirth, alluding to the reptile’s shedding of its skin. Stores in Japan, which observes the zodiac cycle from January 1, have been selling tiny figures of smiling snakes and other snake-themed products. Other places in Asia will start marking the Year of the Snake later with the Lunar New Year.</p>
+    </div>
+  </div>
+
+  <!-- Modal for Winter Olympics -->
+  <div id="winter-olympics-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('winter-olympics')">&times;</span>
+      <h1>2024 Winter Olympics in Italy</h1>
+      <img src="https://www.ccjk.com/content/uploads/2024/01/Winter-Olympics-776x321-1.webp" alt="Winter Olympics">
+      <p>The 4th Winter Youth Olympic Games took place in the province of Gangwon in the Republic of Korea, which already hosted the Olympic Winter Games PyeongChang 2018. These first Winter YOG to be held in Asia build on the Olympic Games legacy and did engage even more young people through various activities before, throughout and after the Games.
+
+        The vision of Gangwon 2024 was to let the youth celebrate peaceful coexistence and unity through sport to create a better future together. The aim was to drive positive change and social unity in the region, impacting society in the areas of sport, culture and education. Gangwon 2024 did benefit from many of the facilities used for PyeongChang 2018. This will ensured a cost-efficient and sustainable YOG, and, at the same time, provided the participating athletes with the opportunity to compete in some of the same sites as Olympians did a few years before.</p>
+    </div>
+  </div>
+
+  <!-- Modal for World Expo -->
+  <div id="world-expo-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('world-expo')">&times;</span>
+      <h1>World Expo 2024</h1>
+      <img src="https://aiph.org/wp-content/uploads/2022/12/WechatIMG171.jpg" alt="World Expo 2024">
+      <p>There are multiple expos in 2024, including the World Trade Expo, the Valve World Expo, the Compounding World Expo, and the Grains World Conference & Expo. 
+        <ul><b>World Trade Expo 2024</b>
+            <ol>A platform for trade, investment, technology, tourism, and education</ol>
+              <ol>A chance for businesses to connect with Indian MSMEs, startups, and corporate houses</ol>
+                <ol>The theme is "Innovation for Sustainability – Green & Renewable Energy"</ol>
+        <b>Valve World Expo 2024</b>
+          <ol>A platform for the global valve industry</ol>
+            <ol>A meeting point for the valve community</ol>
+              <ol>A showcase for technological innovation</ol>
+                <ol>A platform for collaboration across industries and borders</ol>
+
+      </ul></p>
+    </div>
+  </div>
+
+  <!-- Modal for Elections -->
+  <div id="elections-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('elections')">&times;</span>
+      <h1>2024 U.S. Presidential Election</h1>
+      <img src="https://images.theconversation.com/files/630276/original/file-20241106-15-t59zsn.png?ixlib=rb-4.1.0&q=20&auto=format&w=320&fit=clip&dpr=2&usm=12&cs=strip" alt="2024 Elections">
+      <p>Donald Trump will be America’s 47th president, after mounting the most momentous comeback in political history that will hand him massive, disruptive power at home and will send shockwaves around the world. Four years after leaving Washington as a pariah, following his attempt to overturn the 2020 election to stay in office, Trump’s victory defied two assassination attempts, two presidential impeachments, his criminal conviction and many other criminal charges.</p>
+    </div>
+  </div>
+
+  <script>
+    // Open the modal
+    function openModal(eventId) {
+      var modal = document.getElementById(eventId + '-modal');
+      modal.style.display = 'flex';
+    }
+
+    // Close the modal
+    function closeModal(eventId) {
+      var modal = document.getElementById(eventId + '-modal');
+      modal.style.display = 'none';
+    }
+
+    // Close modal if clicked outside of the content
+    window.onclick = function(event) {
+      var modals = document.getElementsByClassName('modal');
+      for (var i = 0; i < modals.length; i++) {
+        if (event.target == modals[i]) {
+          modals[i].style.display = 'none';
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

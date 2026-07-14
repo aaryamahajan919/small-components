@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2024 Events Timeline</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .timeline {
+  position: relative;
+  max-width: 60%;
+  width: 100%;
+  margin: 0 auto;
+  overflow-y: auto;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.timeline::before {
+  content: '';
+  position: fixed;
+  left: 50%;
+  top: 0;
+  width: 2px;
+  background-color: #3498db;
+  transform: translateX(-50%);
+  height: 100vh; /* Ensure the line spans the entire timeline height */
+}
+
+.timeline-event {
+  display: flex;
+  cursor: pointer;
+  justify-content: flex-start;
+  margin: 20px 0;
+  position: relative;
+}
+
+.timeline-event img {
+  width: 150px;  /* Set the width to 250px */
+  height: 150px; /* Set the height to 250px */
+  object-fit: cover; /* Ensures the image fills the area without distorting its aspect ratio */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-right: 20px;
+}
+
+.timeline-event-content {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  position: relative;
+}
+
+.timeline-event h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.timeline-event p {
+  color: #666;
+}
+
+.timeline-date {
+  position: absolute;
+  right: 20px;  /* Position the date to the right */
+  top: 20px;    /* Place it near the top */
+  color: #3498db;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+  </style>
+</head>
+<body>
+
+  <div class="timeline">
+    <div class="timeline-event">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/NYE_2020_Times_Square_4.jpg" alt="New Year's Eve">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Jan 1, 2024</div>
+        <h3>New Year's Day 2024</h3>
+        <p>Celebration of the beginning of a new year globally with fireworks, parties, and resolutions.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/2024_Winter_Olympics_logo.jpg" alt="Winter Olympics">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Feb 1, 2024</div>
+        <h3>2024 Winter Olympics in Italy</h3>
+        <p>The Winter Olympics were held in Milan-Cortina, Italy, with global athletes competing in winter sports.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Perserverance_Landing.jpg" alt="Mars Rover Landing">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Mar 15, 2024</div>
+        <h3>Launch of the Mars Rover</h3>
+        <p>NASA launched a new rover to explore the surface of Mars as part of their continued space exploration missions.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Earth_Day_celebration.jpg" alt="Earth Day">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Apr 22, 2024</div>
+        <h3>Earth Day 2024</h3>
+        <p>Global Earth Day celebrations aimed at raising awareness for environmental conservation and sustainability.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/0/06/Global_health_day_event.jpg" alt="Global Health Event">
+      <div class="timeline-event-content">
+        <div class="timeline-date">May 10, 2024</div>
+        <h3>Global Health Conference 2024</h3>
+        <p>World leaders and experts gather to discuss global health challenges, including pandemic preparedness.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/f/f9/World_Climate_Summit.jpg" alt="Global Climate Summit">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Jun 5, 2024</div>
+        <h3>Global Climate Summit</h3>
+        <p>The 2024 Global Climate Summit focused on new environmental policies to combat climate change.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/Artificial_Intelligence_image.jpg" alt="AI Technology">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Jul 18, 2024</div>
+        <h3>Launch of the Next-Gen AI Technology</h3>
+        <p>The launch of a new AI technology that revolutionizes various industries including healthcare, education, and more.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/64/International_Space_Station_Expanding.jpg" alt="ISS Expansion">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Aug 30, 2024</div>
+        <h3>International Space Station Expansion</h3>
+        <p>The ISS expanded with new modules and collaborations for further research into space habitation.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/Financial_Crisis_Recovery.jpg" alt="Financial Recovery">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Sep 12, 2024</div>
+        <h3>Global Financial Crisis Averted</h3>
+        <p>Countries across the globe managed to avert a major financial crisis through global cooperation and economic policies.</p>
+      </div>
+    </div>
+
+    <div class="timeline-event">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Peace_Agreement_Signing.jpg" alt="Peace Agreement">
+      <div class="timeline-event-content">
+        <div class="timeline-date">Dec 1, 2024</div>
+        <h3>Global Peace Agreement Signed</h3>
+        <p>A historic peace agreement was signed by nations to work together toward a peaceful future for all.</p>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
